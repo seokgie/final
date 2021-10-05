@@ -1,0 +1,11 @@
+.classpath
+.project
+.springBeans
+final_Project.iml
+.idea/
+.settings/
+target/
+src/main/webapp/META-INF/MANIFEST.MF
+src/main/webapp/WEB-INF/classes/
+src/test/resources/log4j.xml
+src/main/webapp/WEB-INF/lib/

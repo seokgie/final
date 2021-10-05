@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- properties파일 설정 -->
+	<bean id="propertyConfiguer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/props/*.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- uploadPath 자바에서 사용하기 (root)경로 -->
+	<util:properties id="uploadPath" location="classpath:/props/common.properties"/>
+
+	<!-- MultipartFile과 parameter를 받아주고, 기타 설정-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="maxUploadSize" value="10000000"/>
+		<property name="maxInMemorySize" value="10000000"></property>
+	</bean>
+
+	<!-- Gmail -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="qkrgks456@gmail.com" />
+		<property name="password" value="#qkr0147258" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

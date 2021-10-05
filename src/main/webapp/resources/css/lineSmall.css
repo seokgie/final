@@ -1,0 +1,10 @@
+table {
+    table-layout: fixed;
+}
+
+.lineSmall {
+    /* 여러 줄 자르기 추가 스타일 */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

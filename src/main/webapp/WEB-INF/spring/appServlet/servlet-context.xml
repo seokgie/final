@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xmlns:beans="http://www.springframework.org/schema/beans"
+			 xmlns:context="http://www.springframework.org/schema/context"
+			 xmlns:task="http://www.springframework.org/schema/task"
+			 xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+	<context:component-scan base-package="com.gudi.*" />
+
+	<!-- 인터셉터 설정 -->
+	<beans:bean id="interceptor" class="com.gudi.main.util.Interceptor"> </beans:bean>
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/resources/**"/>
+			<beans:ref bean="interceptor"/>
+		</interceptor>
+	</interceptors>
+	<!-- 두가지 방법은 안됩니다 -->
+	<!-- @Scheduled 어노테이션 검색해서 실행 -->
+	<task:annotation-driven/>
+
+	<!-- 빈으로 등록하는 방법 -->
+	<!-- fixed - * : 매초마다 실행시 유리 -->
+	<!-- cron : 매 분/시/일/요일/월/년 마다 실행시 유리 -->
+	<!-- <beans:bean id="scheduleJob" class="com.go.main.service.MainService"/>
+     <task:scheduled-tasks>
+         <task:scheduled ref="scheduleJob" method="loop5" cron="0/1 * * * * MON-FRI"/>
+     </task:scheduled-tasks>-->
+</beans:beans>
